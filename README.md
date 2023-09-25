@@ -1,1 +1,1 @@
-# smart-contract-components
+# Smart Contract Clients
