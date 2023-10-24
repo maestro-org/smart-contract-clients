@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import { Checkbox } from "./Checkbox";
-import { DropdownIcon } from "./DropdownIcon";
+import { Checkbox } from "../Checkbox/Checkbox";
+import { DropdownIcon } from "../Icons";
 
 interface DropdownCustomProps {
   value: string[];

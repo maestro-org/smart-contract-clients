@@ -6,7 +6,7 @@ import {
   FormControlLabel as MuiFormControlLabel,
 } from "@mui/material/";
 import React from "react";
-import { CheckMarkIcon } from "./CheckMarkIcon";
+import { CheckMarkIcon } from "../Icons";
 
 export interface CustomProps {
   variant?: "default" | "outlined";

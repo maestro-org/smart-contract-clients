@@ -1,6 +1,6 @@
 import { InputAdornment, OutlinedTextFieldProps, styled, TextField as MuiTextField, Typography } from "@mui/material";
 import React from "react";
-import { ErrorIcon } from "./ErrorIcon";
+import { ErrorIcon } from "../Icons";
 
 interface TextFieldCustomProps {
   customVariant?: "outlined";
@@ -25,16 +25,18 @@ export const TextField = ({
   ...props
 }: TextFieldProps) => (
   <Wrapper>
-    <TitleWrapper>
-      <Typography color="textfield.textColor" variant="paragraphSmall">
-        {label}
-      </Typography>
-      <DisplayWithCondition show={errorPosition === "top"}>
-        <Typography color="textfield.errorText" variant="paragraphSmall">
-          {helperText}
+    {(label || (helperText && errorPosition === "top")) && (
+      <TitleWrapper>
+        <Typography color="textfield.textColor" variant="paragraphSmall">
+          {label}
         </Typography>
-      </DisplayWithCondition>
-    </TitleWrapper>
+        <DisplayWithCondition show={errorPosition === "top"}>
+          <Typography color="textfield.errorText" variant="paragraphSmall">
+            {helperText}
+          </Typography>
+        </DisplayWithCondition>
+      </TitleWrapper>
+    )}
     <StyledTextField
       id="outlined-basic"
       InputProps={{
@@ -52,11 +54,13 @@ export const TextField = ({
       helperText={helperText}
       {...props}
     />
-    <DisplayWithCondition show={errorPosition === "bottom"}>
-      <Typography color="textfield.errorText" variant="paragraphSmall">
-        {helperText}
-      </Typography>
-    </DisplayWithCondition>
+    {helperText && errorPosition === "bottom" && (
+      <DisplayWithCondition show={errorPosition === "bottom"}>
+        <Typography color="textfield.errorText" variant="paragraphSmall">
+          {helperText}
+        </Typography>
+      </DisplayWithCondition>
+    )}
   </Wrapper>
 );
 
@@ -95,7 +99,7 @@ const StyledTextField = styled(MuiTextField)(({ theme }) => ({
   },
 
   "& .MuiOutlinedInput-notchedOutline": {
-    border: `2px solid ${theme.palette.textfield.border.main}`,
+    border: `1px solid ${theme.palette.textfield.border.main}`,
     backgroundColor: theme.palette.textfield.background,
     borderRadius: theme.borderRadius.sm,
     transition: "0.3s",
@@ -128,7 +132,7 @@ const StyledTextField = styled(MuiTextField)(({ theme }) => ({
     opacity: 1,
   },
 
-  "& .MuiInputAdornment-positionEnd": {
+  "& .MuiInputAdornment-root": {
     zIndex: 10,
   },
 
