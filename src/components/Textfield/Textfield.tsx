@@ -100,6 +100,7 @@ const StyledTextField = styled(MuiTextField)(({ theme }) => ({
 
   "& .MuiOutlinedInput-notchedOutline": {
     border: `1px solid ${theme.palette.textfield.border.main}`,
+    borderWidth: "1px !important",
     backgroundColor: theme.palette.textfield.background,
     borderRadius: theme.borderRadius.sm,
     transition: "0.3s",

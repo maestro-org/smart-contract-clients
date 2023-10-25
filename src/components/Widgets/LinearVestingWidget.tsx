@@ -1,8 +1,8 @@
 import { styled } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import { useFormik } from "formik";
 import React from "react";
 
-import WidgetCard from "../Card/WidgetCard";
-import { useFormik } from "formik";
 import { getLinearVestingFields, initialValuesLinearVesting } from "../../forms/linearVesting/form";
 import { linearVestingSchema } from "../../forms/linearVesting/validation";
 import {
@@ -10,9 +10,12 @@ import {
   LinearVestingFormValues,
   LinearVestingSingleField,
 } from "../../forms/linearVesting/types";
+
+import WidgetCard from "../Card/WidgetCard";
 import { TextField } from "../Textfield/Textfield";
 import { Button } from "../Button/Button";
 import TokenTextfield from "../Textfield/TokenTextfield";
+import { DateIcon } from "../Icons";
 
 const LinearVestingWidget = () => {
   const onSubmit = (values: LinearVestingFormValues) => {
@@ -58,18 +61,11 @@ const LinearVestingWidget = () => {
 
     if (field.type === "date") {
       return (
-        <TextField
-          name={field.name}
-          type={field.type}
-          variant="outlined"
-          value={values[field.name]}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder={field.placeholder}
-          error={checkError(field.name)}
-          helperText={getHelperText(field.name)}
-          errorPosition="bottom"
-          endIcon={field.endIcon}
+        <DatePicker
+          format="dd/MM/yy"
+          slots={{
+            openPickerIcon: () => <DateIcon />,
+          }}
         />
       );
     }
