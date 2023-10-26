@@ -1,5 +1,4 @@
 import { styled } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
 import { useFormik } from "formik";
 import React from "react";
 
@@ -16,13 +15,14 @@ import { TextField } from "../Textfield/Textfield";
 import { Button } from "../Button/Button";
 import TokenTextfield from "../Textfield/TokenTextfield";
 import { DateIcon } from "../Icons";
+import DatePicker from "../DatePicker/DatePicker";
 
 const LinearVestingWidget = () => {
   const onSubmit = (values: LinearVestingFormValues) => {
     console.log(values);
   };
 
-  const { values, touched, errors, handleChange, handleBlur, handleSubmit } = useFormik({
+  const { values, touched, errors, handleChange, handleBlur, setFieldValue, handleSubmit } = useFormik({
     initialValues: initialValuesLinearVesting,
     validationSchema: linearVestingSchema,
     validateOnChange: true,
@@ -36,6 +36,10 @@ const LinearVestingWidget = () => {
     errors[name as keyof typeof errors] && touched[name as keyof typeof touched]
       ? (errors[name as keyof typeof errors] as string)
       : undefined;
+
+  const handleDateChange = (name: LinearVestingFields, value: Date) => {
+    setFieldValue(name, value);
+  };
 
   const getField = (field: LinearVestingSingleField) => {
     if (field.name === LinearVestingFields.tokenAmount) {
@@ -66,6 +70,10 @@ const LinearVestingWidget = () => {
           slots={{
             openPickerIcon: () => <DateIcon />,
           }}
+          onChange={handleDateChange.bind(null, field.name)}
+          error={checkError(field.name)}
+          helperText={getHelperText(field.name)}
+          errorPosition="bottom"
         />
       );
     }
@@ -97,7 +105,7 @@ const LinearVestingWidget = () => {
             </FieldWrapper>
           ))}
           <ButtonWrapper>
-            <Button disabled type="submit">
+            <Button type="submit" onKeyDown={(e) => e.preventDefault()}>
               Submit
             </Button>
           </ButtonWrapper>
