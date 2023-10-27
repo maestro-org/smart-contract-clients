@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { Typography, styled } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { getLinearVestingFields, initialValuesLinearVesting } from "../../forms/linearVesting/form";
 import { linearVestingSchema } from "../../forms/linearVesting/validation";
@@ -14,21 +14,33 @@ import WidgetCard from "../Card/WidgetCard";
 import { TextField } from "../Textfield/Textfield";
 import { Button } from "../Button/Button";
 import TokenTextfield from "../Textfield/TokenTextfield";
-import { DateIcon } from "../Icons";
 import DatePicker from "../DatePicker/DatePicker";
+import { DateIcon, InfoBlackIcon, SmallArrowDown } from "../Icons";
 
 const LinearVestingWidget = () => {
+  const [initialyValidated, setInitialyValidated] = useState(false);
+
   const onSubmit = (values: LinearVestingFormValues) => {
     console.log(values);
   };
 
-  const { values, touched, errors, handleChange, handleBlur, setFieldValue, handleSubmit } = useFormik({
-    initialValues: initialValuesLinearVesting,
-    validationSchema: linearVestingSchema,
-    validateOnChange: true,
-    enableReinitialize: true,
-    onSubmit,
-  });
+  const { values, touched, errors, isValid, validateForm, handleChange, handleBlur, setFieldValue, handleSubmit } =
+    useFormik({
+      initialValues: initialValuesLinearVesting,
+      validationSchema: linearVestingSchema,
+      validateOnChange: true,
+      enableReinitialize: true,
+      onSubmit,
+    });
+
+  useEffect(() => {
+    const validate = async () => {
+      await validateForm(values);
+      setInitialyValidated(true);
+    };
+
+    validate();
+  }, []);
 
   const checkError = (name: string) => !!errors[name as keyof typeof errors] && !!touched[name as keyof typeof touched];
 
@@ -40,6 +52,8 @@ const LinearVestingWidget = () => {
   const handleDateChange = (name: LinearVestingFields, value: Date) => {
     setFieldValue(name, value);
   };
+
+  const isFormValid = initialyValidated && isValid;
 
   const getField = (field: LinearVestingSingleField) => {
     if (field.name === LinearVestingFields.tokenAmount) {
@@ -109,6 +123,54 @@ const LinearVestingWidget = () => {
               Submit
             </Button>
           </ButtonWrapper>
+          {isFormValid && (
+            <DetailsWrapper>
+              <DetailsItem>
+                <DetailsTitle>
+                  <Typography color="grey.A200" variant="paragraphSmall">
+                    Reward/period
+                  </Typography>
+                  <InfoBlackIcon />
+                </DetailsTitle>
+                <Typography color="grey.A200" variant="paragraphSmall">
+                  100 GENS
+                </Typography>
+              </DetailsItem>
+              <DetailsItem>
+                <DetailsTitle>
+                  <Typography color="grey.A200" variant="paragraphSmall">
+                    Vesting period
+                  </Typography>
+                  <InfoBlackIcon />
+                </DetailsTitle>
+                <Typography color="grey.A200" variant="paragraphSmall">
+                  10 days
+                </Typography>
+              </DetailsItem>
+              <DetailsItem>
+                <DetailsTitle>
+                  <Typography color="grey.A200" variant="paragraphSmall">
+                    Deposit
+                  </Typography>
+                  <InfoBlackIcon />
+                </DetailsTitle>
+                <Typography color="grey.A200" variant="paragraphSmall">
+                  1.7 ADA
+                </Typography>
+              </DetailsItem>
+              <DetailsItem>
+                <DetailsTitle>
+                  <Typography color="grey.A200" variant="paragraphSmall">
+                    Total Fee
+                  </Typography>
+                  <SmallArrowDown />
+                </DetailsTitle>
+                <Typography color="grey.A200" variant="paragraphSmall">
+                  2.45 ADA
+                </Typography>
+              </DetailsItem>
+            </DetailsWrapper>
+          )}
         </Form>
       </WidgetCard>
     </OuterWrapper>
@@ -143,7 +205,26 @@ const ButtonWrapper = styled("div")({
 
   "& button": {
     width: "100%",
+    height: "44px",
   },
+});
+
+const DetailsWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "4px",
+  width: "100%",
+});
+
+const DetailsItem = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+});
+
+const DetailsTitle = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  columnGap: "4px",
 });
 
 export default LinearVestingWidget;

@@ -1,7 +1,8 @@
 import React from "react";
+import { Token } from "../../types/token";
 
 export interface LinearVestingFormValues {
-  token: any;
+  token: Token | null;
   tokenAmount: number | null;
   startDate: Date | null;
   endDate: Date | null;

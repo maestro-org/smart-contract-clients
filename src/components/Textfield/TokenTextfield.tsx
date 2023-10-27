@@ -2,12 +2,13 @@ import { Typography, styled } from "@mui/material";
 import React from "react";
 import { TextField, TextFieldProps } from "./Textfield";
 import { numberDecorator } from "../../lib/numberDecorator";
+import { Token } from "../../types/token";
 
 interface Props {
   textfield: TextFieldProps;
   balance: number;
   handleClick: () => void;
-  token?: any;
+  token?: Token;
 }
 
 const TokenTextfield = ({ balance, textfield, token }: Props) => {
@@ -25,7 +26,12 @@ const TokenTextfield = ({ balance, textfield, token }: Props) => {
         {...textfield}
         startIcon={
           token ? (
-            <div />
+            <TokenWrapper>
+              <TokenLogo src={token.logo} alt={token.name} />
+              <Typography color="grey.A200" variant="paragraphMedium">
+                {token.name}
+              </Typography>
+            </TokenWrapper>
           ) : (
             <NoTokenWrapper>
               <Typography variant="paragraphMedium" color="primary.main">
@@ -68,6 +74,16 @@ const BalanceTypography = styled(Typography)({
 
 const NoTokenWrapper = styled("div")({
   cursor: "pointer",
+});
+
+const TokenWrapper = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  columnGap: "8px",
+});
+
+const TokenLogo = styled("img")({
+  height: "23px",
 });
 
 export default TokenTextfield;
