@@ -8,7 +8,7 @@
       <img src="https://img.shields.io/badge/-Docs-blue?style=flat-square&logo=semantic-scholar&logoColor=white" />
     </a>
     <a href="./LICENSE">
-      <img src="https://img.shields.io/github/license/maestro-org/smart-contract-clients?style=flat-square&label=License" />
+      <img src="https://img.shields.io/github/license/maestro-org/smart-contract-servers?style=flat-square&label=License" />
     </a>
     <a href="./CONTRIBUTING.md">
       <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" />
@@ -24,6 +24,6 @@
 
 Maestro's [Managed Contracts API](https://docs.gomaestro.org/docs/ManagedContracts/Introduction) offers developer-friendly endpoints for ready-to-deploy smart contracts. The fully managed service aims to improve developer experience and bootstrap Dapp development on Cardano.
 
-This repository is reponsible for housing user-facing clients that interact with smart contracts via an off-chain server. They are meant as a starting point for those wishing to integrate managed contracts from Maestro's smart contract marketplace into their applications.
+This repository is reponsible for housing off-chain servers that interact with the smart contracts. They are meant as a starting point for those wishing to securely integrate managed contracts from Maestro's smart contract marketplace into their applications.
 
 # Contributing
