@@ -1,7 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 
-import { TokenIcon, Button } from "../components";
+import { Button } from "../components/Button/Button";
+import { TokenIcon } from "../components/Icons";
 
 import { customArgTypes } from "../lib/customStoryArgTypes";
 

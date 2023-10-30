@@ -1,64 +1,42 @@
-import { InputAdornment, OutlinedTextFieldProps, styled, TextField as MuiTextField, Typography } from "@mui/material";
 import React from "react";
-import { ErrorIcon } from "./ErrorIcon";
+import { DatePickerProps, DatePicker as MuiDatePicker } from "@mui/x-date-pickers";
+import { Typography, styled } from "@mui/material";
 
-interface TextFieldCustomProps {
-  customVariant?: "outlined";
-  endIcon?: React.ReactNode;
-  startIcon?: React.ReactNode;
-  required?: boolean;
-  placeholder?: string;
+interface CustomProps {
   errorPosition?: "top" | "bottom";
   label?: string | React.ReactNode;
+  helperText?: string;
+  error?: boolean;
 }
 
-export type TextFieldProps = Omit<OutlinedTextFieldProps, "size" | "color" | "label"> & TextFieldCustomProps;
+type Props = CustomProps & DatePickerProps<any>;
 
-export const TextField = ({
-  endIcon,
-  startIcon,
-  required = false,
-  errorPosition = "top",
-  label,
-  helperText,
-  error,
-  ...props
-}: TextFieldProps) => (
-  <Wrapper>
-    <TitleWrapper>
-      <Typography color="textfield.textColor" variant="paragraphSmall">
-        {label}
-      </Typography>
-      <DisplayWithCondition show={errorPosition === "top"}>
-        <Typography color="textfield.errorText" variant="paragraphSmall">
-          {helperText}
-        </Typography>
-      </DisplayWithCondition>
-    </TitleWrapper>
-    <StyledTextField
-      id="outlined-basic"
-      InputProps={{
-        endAdornment:
-          (endIcon && <InputAdornment position="end">{endIcon}</InputAdornment>) ||
-          (error && (
-            <InputAdornment position="end">
-              <ErrorIcon />
-            </InputAdornment>
-          )),
-        startAdornment: startIcon && <InputAdornment position="start">{startIcon}</InputAdornment>,
-      }}
-      required={required}
-      error={error}
-      helperText={helperText}
-      {...props}
-    />
-    <DisplayWithCondition show={errorPosition === "bottom"}>
-      <Typography color="textfield.errorText" variant="paragraphSmall">
-        {helperText}
-      </Typography>
-    </DisplayWithCondition>
-  </Wrapper>
-);
+const DatePicker = ({ errorPosition, label, helperText, error, ...props }: Props) => {
+  return (
+    <Wrapper>
+      {(label || (helperText && errorPosition === "top")) && (
+        <TitleWrapper>
+          <Typography color="textfield.textColor" variant="paragraphSmall">
+            {label}
+          </Typography>
+          <DisplayWithCondition show={errorPosition === "top"}>
+            <Typography color="textfield.errorText" variant="paragraphSmall">
+              {helperText}
+            </Typography>
+          </DisplayWithCondition>
+        </TitleWrapper>
+      )}
+      <StyledDatePicker error={error} {...props} />
+      {helperText && errorPosition === "bottom" && (
+        <DisplayWithCondition show={errorPosition === "bottom"}>
+          <Typography color="textfield.errorText" variant="paragraphSmall">
+            {helperText}
+          </Typography>
+        </DisplayWithCondition>
+      )}
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -75,18 +53,16 @@ const DisplayWithCondition = styled("span")<{ show: boolean }>(({ show }) => ({
   display: show ? "block" : "none",
 }));
 
-const StyledTextField = styled(MuiTextField)(({ theme }) => ({
+const StyledDatePicker = styled(MuiDatePicker)<{ error?: boolean }>(({ theme, error }) => ({
   maxWidth: "100%",
   width: "100%",
 
   "& .MuiInputBase-root": {
     height: "auto",
-    padding: "12.5px 24px",
   },
 
   "& .MuiInputBase-input": {
     zIndex: 10,
-    padding: 0,
   },
 
   "& .MuiInputBase-input::placeholder": {
@@ -95,9 +71,10 @@ const StyledTextField = styled(MuiTextField)(({ theme }) => ({
   },
 
   "& .MuiOutlinedInput-notchedOutline": {
-    border: `2px solid ${theme.palette.textfield.border.main}`,
+    border: `1px solid ${theme.palette.textfield.border.main}`,
+    borderWidth: "1px !important",
     backgroundColor: theme.palette.textfield.background,
-    borderRadius: theme.borderRadius.sm,
+    borderRadius: theme.borderRadius.xxs,
     transition: "0.3s",
   },
 
@@ -128,7 +105,7 @@ const StyledTextField = styled(MuiTextField)(({ theme }) => ({
     opacity: 1,
   },
 
-  "& .MuiInputAdornment-positionEnd": {
+  "& .MuiInputAdornment-root": {
     zIndex: 10,
   },
 
@@ -156,11 +133,17 @@ const StyledTextField = styled(MuiTextField)(({ theme }) => ({
     opacity: 1,
   },
 
-  "& .Mui-error input.MuiOutlinedInput-input": {
-    color: theme.palette.textfield.errorText,
-  },
+  ...(error
+    ? {
+        "& input.MuiOutlinedInput-input": {
+          color: theme.palette.textfield.errorText,
+        },
 
-  "& .Mui-error .MuiOutlinedInput-notchedOutline": {
-    borderColor: `${theme.palette.textfield.border.error} !important`,
-  },
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: `${theme.palette.textfield.border.error} !important`,
+        },
+      }
+    : {}),
 }));
+
+export default DatePicker;

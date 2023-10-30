@@ -103,7 +103,7 @@ const textfield = {
   errorText: error.main,
   textColor: grey["A200"],
   border: {
-    main: grey["200"],
+    main: grey["100"],
     hover: grey["400"],
     focus: primary["main"],
     filled: grey["300"],

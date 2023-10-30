@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { getTheme } from "./lib/theme";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -18,7 +20,9 @@ const Project = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <App />
+        </LocalizationProvider>
         <ToastContainer position="bottom-right" autoClose={2500} />
       </ThemeProvider>
     </Provider>
