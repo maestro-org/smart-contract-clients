@@ -45,7 +45,7 @@ yarn storybook
 
 # Contributing
 
-TODO
+TODO: explain how to contribute new smart contract clients/forms
 
 ---
 
