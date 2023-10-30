@@ -2,7 +2,7 @@
   <a href="https://www.gomaestro.org/">
     <img src="https://www.gomaestro.org/logos/LandingLogos/DarkLogo.svg" alt="Maestro Logo" width="425" />
   </a>
-  <h2 align="center"><a href="https://www.gomaestro.org/">Maestro</a> Smart Contract Marketplace Servers</h2>
+  <h2 align="center"><a href="https://www.gomaestro.org/">Maestro</a> Smart Contract Marketplace Clients</h2>
   <p align="center">
     <a href="https://docs.gomaestro.org/docs/ManagedContracts/Introduction">
       <img src="https://img.shields.io/badge/-Docs-blue?style=flat-square&logo=semantic-scholar&logoColor=white" />
@@ -24,6 +24,29 @@
 
 Maestro's [Managed Contracts API](https://docs.gomaestro.org/docs/ManagedContracts/Introduction) offers developer-friendly endpoints for ready-to-deploy smart contracts. The fully managed service aims to improve developer experience and bootstrap Dapp development on Cardano.
 
-This repository is reponsible for housing user-facing clients that interact with smart contracts via an off-chain server. They are meant as a starting point for those wishing to integrate managed contracts from Maestro's smart contract marketplace into their applications.
+This repository is reponsible for housing React-based, user-facing clients that interact with smart contracts in Maestro's [Smart Contracts Marketplace](https://www.gomaestro.org/smart-contracts) via an [off-chain server](https://github.com/maestro-org/smart-contract-servers).
+
+# Usage
+
+## Install
+```
+yarn install
+```
+
+## Run development app
+```
+yarn start
+```
+
+## Run Storybook workshop
+```
+yarn storybook
+```
 
 # Contributing
+
+TODO
+
+---
+
+Meastro welcomes all contributors! Please see our [contributing guidelines](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
