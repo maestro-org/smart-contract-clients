@@ -17,6 +17,7 @@ const StyledCard = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   rowGap: "24px",
+  background: theme.palette.common.white,
 }));
 
 export default Card;

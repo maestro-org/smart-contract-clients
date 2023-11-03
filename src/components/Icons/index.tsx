@@ -6,3 +6,5 @@ export { MeastroLogo } from "./MeastroLogo";
 export { DateIcon } from "./DateIcon";
 export { InfoBlackIcon } from "./InfoBlackIcon";
 export { SmallArrowDown } from "./SmallArrowDown";
+export { CloseDialogIcon } from "./CloseDialogIcon";
+export { SearchIcon } from "./SearchIcon";
