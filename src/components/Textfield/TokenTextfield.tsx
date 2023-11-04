@@ -11,7 +11,7 @@ interface Props {
   token?: Token;
 }
 
-const TokenTextfield = ({ balance, textfield, token }: Props) => {
+const TokenTextfield = ({ balance, textfield, token, handleClick }: Props) => {
   return (
     <Wrapper>
       <BalanceWrapper>
@@ -26,14 +26,14 @@ const TokenTextfield = ({ balance, textfield, token }: Props) => {
         {...textfield}
         startIcon={
           token ? (
-            <TokenWrapper>
+            <TokenWrapper onClick={handleClick}>
               <TokenLogo src={token.logo} alt={token.name} />
               <Typography color="grey.A200" variant="paragraphMedium">
                 {token.name}
               </Typography>
             </TokenWrapper>
           ) : (
-            <NoTokenWrapper>
+            <NoTokenWrapper onClick={handleClick}>
               <Typography variant="paragraphMedium" color="primary.main">
                 + Token
               </Typography>
@@ -80,6 +80,7 @@ const TokenWrapper = styled("div")({
   display: "flex",
   alignItems: "center",
   columnGap: "8px",
+  cursor: "pointer",
 });
 
 const TokenLogo = styled("img")({

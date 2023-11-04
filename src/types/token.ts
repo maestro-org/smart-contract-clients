@@ -4,4 +4,5 @@ export interface Token {
   company: string;
   price: number;
   logo: string;
+  amount: number;
 }

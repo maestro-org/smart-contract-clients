@@ -16,9 +16,15 @@ import { Button } from "../Button/Button";
 import TokenTextfield from "../Textfield/TokenTextfield";
 import DatePicker from "../DatePicker/DatePicker";
 import { DateIcon, InfoBlackIcon, SmallArrowDown } from "../Icons";
+import { updatePopup } from "../../redux/actions/popupsActions";
+import { Popups } from "../../types/popups";
+import { useDispatch } from "react-redux";
+import { tokens } from "../../mock/tokens";
 
 const LinearVestingWidget = () => {
   const [initialyValidated, setInitialyValidated] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onSubmit = (values: LinearVestingFormValues) => {
     console.log(values);
@@ -55,12 +61,26 @@ const LinearVestingWidget = () => {
 
   const isFormValid = initialyValidated && isValid;
 
+  const handleTokenSelect = (id: string) => {
+    const currentToken = tokens.find((token) => token.id === id);
+    if (!currentToken) return;
+    setFieldValue(LinearVestingFields.token, currentToken);
+  };
+
+  const openPopup = () => {
+    dispatch(
+      updatePopup({ popup: Popups.tokenSelection, status: true, prefilled: { handleTokenClick: handleTokenSelect } }),
+    );
+  };
+
   const getField = (field: LinearVestingSingleField) => {
     if (field.name === LinearVestingFields.tokenAmount) {
+      console.log();
       return (
         <TokenTextfield
           balance={0}
-          handleClick={console.log}
+          handleClick={openPopup}
+          token={values.token || undefined}
           textfield={{
             name: field.name,
             type: field.type,

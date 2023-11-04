@@ -1,14 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { pages } from "./lib/routeUtils";
 import Mainpage from "./modules/Homepage/Mainpage";
+import AllDialogs from "./components/Popups/AllDialogs";
+
+import { pages } from "./lib/routeUtils";
 
 const Router = () => (
   <BrowserRouter>
     <Routes>
       <Route path={pages.main()} element={<Mainpage />} />
     </Routes>
-    {/* <AllDialogs /> */}
+    <AllDialogs />
   </BrowserRouter>
 );
 
