@@ -65,6 +65,7 @@ const LinearVestingWidget = () => {
     const currentToken = tokens.find((token) => token.id === id);
     if (!currentToken) return;
     setFieldValue(LinearVestingFields.token, currentToken);
+    dispatch(updatePopup({ popup: Popups.tokenSelection, status: false }));
   };
 
   const openPopup = () => {
@@ -75,7 +76,6 @@ const LinearVestingWidget = () => {
 
   const getField = (field: LinearVestingSingleField) => {
     if (field.name === LinearVestingFields.tokenAmount) {
-      console.log();
       return (
         <TokenTextfield
           balance={0}
