@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../Card/Card";
 import { Typography, styled } from "@mui/material";
 import { Button } from "../Button/Button";
 import { MeastroLogo, SmallArrowDown } from "../Icons";
+import { InfoGrayIcon } from "../Icons/InfoGrayIcon";
 
 const PreviewWidget = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => setIsOpen((prev) => !prev);
+
   return (
     <OuterWrapper>
       <Card>
@@ -58,7 +63,7 @@ const PreviewWidget = () => {
           </RewardsTop>
           <Button variant="secondary">Claim</Button>
           <TotalFeeWrapper>
-            <FeeItem>
+            <FeeItem clickable={true} open={isOpen} onClick={handleClick}>
               <WithIcon>
                 <Typography color="grey.800" variant="paragraphSmall">
                   Total Fee
@@ -69,6 +74,33 @@ const PreviewWidget = () => {
                 2.45 ADA
               </Typography>
             </FeeItem>
+            {isOpen && (
+              <>
+                <Separator />
+                <FeeItem>
+                  <WithIcon>
+                    <Typography color="grey.400" variant="paragraphSmall">
+                      Transaction Fee
+                    </Typography>
+                    <InfoGrayIcon />
+                  </WithIcon>
+                  <Typography color="grey.400" variant="paragraphSmall">
+                    0.17 ADA
+                  </Typography>
+                </FeeItem>
+                <FeeItem>
+                  <WithIcon>
+                    <Typography color="grey.400" variant="paragraphSmall">
+                      Frontend Fee
+                    </Typography>
+                    <InfoGrayIcon />
+                  </WithIcon>
+                  <Typography color="grey.400" variant="paragraphSmall">
+                    1.7 ADA
+                  </Typography>
+                </FeeItem>
+              </>
+            )}
           </TotalFeeWrapper>
         </RewardsWrapper>
         <PoweredByWrapper>
@@ -84,8 +116,14 @@ const PreviewWidget = () => {
   );
 };
 
+const Separator = styled("div")({
+  width: "100%",
+  height: "1px",
+  background: "#e6e6e6",
+});
+
 const OuterWrapper = styled("div")({
-  width: "336px",
+  width: "340px",
 });
 
 const TokenCardWrapper = styled("div")({
@@ -130,13 +168,17 @@ const DetailsItem = styled("div")({
 });
 
 const RewardsWrapper = styled("div")(({ theme }) => ({
-  background: theme.palette.grey[50],
-  border: `1px solid ${theme.palette.grey[100]}`,
+  background: "#fff",
+  boxShadow: "0px 10px 35px 0px rgba(0, 0, 0, 0.08)",
   borderRadius: theme.borderRadius.xxs,
   display: "flex",
   flexDirection: "column",
   rowGap: "24px",
   padding: "10px 12px",
+
+  button: {
+    borderRadius: theme.borderRadius.xxs,
+  },
 }));
 
 const RewardsTop = styled("div")({
@@ -152,11 +194,20 @@ const TotalFeeWrapper = styled("div")({
   rowGap: "11px",
 });
 
-const FeeItem = styled("div")({
+const FeeItem = styled("div")<{ clickable?: boolean; open?: boolean }>(({ clickable, open }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-});
+  cursor: clickable ? "pointer" : "auto",
+
+  svg: {
+    transform: open ? "rotate(180deg)" : "rotate(0deg)",
+  },
+
+  span: {
+    lineHeight: "16px !important",
+  },
+}));
 
 const WithIcon = styled("div")({
   display: "flex",

@@ -14,7 +14,7 @@ export const getLinearVestingFields: LinearVestingSingleField[] = [
   {
     type: "number",
     name: LinearVestingFields.tokenAmount,
-    placeholder: "0.0",
+    placeholder: "0.00000000",
     fullwidth: true,
     tokenInput: true,
   },

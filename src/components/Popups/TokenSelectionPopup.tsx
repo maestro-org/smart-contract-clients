@@ -32,7 +32,7 @@ const TokenSelectionPopup = () => {
           Select Token
         </Typography>
         <SearchWrapper>
-          <TextField variant="outlined" startIcon={<SearchIcon />} placeholder="Search by name or ID" />
+          <TextField customVariant="outlined" startIcon={<SearchIcon />} placeholder="Search by name or ID" />
         </SearchWrapper>
         <TokenList>
           {tokens.map((item) => (
@@ -65,7 +65,11 @@ const TokenSelectionPopup = () => {
 };
 
 const SearchWrapper = styled("div")({
-  width: "271px",
+  width: "288px",
+
+  "& .MuiInputBase-root": {
+    padding: "10.5px 12px",
+  },
 });
 
 const TokenList = styled("div")({

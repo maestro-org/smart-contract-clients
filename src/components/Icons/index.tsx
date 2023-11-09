@@ -10,3 +10,4 @@ export { CloseDialogIcon } from "./CloseDialogIcon";
 export { SearchIcon } from "./SearchIcon";
 export { SuccessShapesIcon } from "./SuccessShapesIcon";
 export { CheckmarkCircleIcon } from "./CheckmarkCircleIcon";
+export { SmallDropdownIcon } from "./SmallDropdownIcon";

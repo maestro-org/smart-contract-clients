@@ -15,11 +15,12 @@ import { TextField } from "../Textfield/Textfield";
 import { Button } from "../Button/Button";
 import TokenTextfield from "../Textfield/TokenTextfield";
 import DatePicker from "../DatePicker/DatePicker";
-import { DateIcon, InfoBlackIcon, SmallArrowDown } from "../Icons";
+import { DateIcon } from "../Icons";
 import { updatePopup } from "../../redux/actions/popupsActions";
 import { Popups } from "../../types/popups";
 import { useDispatch } from "react-redux";
 import { tokens } from "../../mock/tokens";
+import LinearVestingFee from "./components/LinearVestingFee";
 
 const LinearVestingWidget = () => {
   const [initialyValidated, setInitialyValidated] = useState(false);
@@ -77,23 +78,28 @@ const LinearVestingWidget = () => {
   const getField = (field: LinearVestingSingleField) => {
     if (field.name === LinearVestingFields.tokenAmount) {
       return (
-        <TokenTextfield
-          balance={0}
-          handleClick={openPopup}
-          token={values.token || undefined}
-          textfield={{
-            name: field.name,
-            type: field.type,
-            variant: "outlined",
-            value: values[field.name],
-            onChange: handleChange,
-            onBlur: handleBlur,
-            placeholder: field.placeholder,
-            error: checkError(field.name),
-            helperText: getHelperText(field.name),
-            errorPosition: "bottom",
-          }}
-        />
+        <TokenWrapper className="123">
+          <TokenTextfield
+            balance={230}
+            handleClick={openPopup}
+            token={values.token || undefined}
+            textfield={{
+              name: field.name,
+              type: field.type,
+              customVariant: "text",
+              value: values[field.name],
+              onChange: handleChange,
+              onBlur: handleBlur,
+              placeholder: field.placeholder,
+              error: checkError(field.name),
+              helperText: getHelperText(field.name),
+              errorPosition: "bottom",
+              withoutErrorLabel: true,
+            }}
+          />
+
+          <Separator />
+        </TokenWrapper>
       );
     }
 
@@ -106,8 +112,9 @@ const LinearVestingWidget = () => {
           }}
           onChange={handleDateChange.bind(null, field.name)}
           error={checkError(field.name)}
-          helperText={getHelperText(field.name)}
+          // helperText={getHelperText(field.name)}
           errorPosition="bottom"
+          label={getHelperText(field.name) || field.placeholder}
         />
       );
     }
@@ -116,13 +123,14 @@ const LinearVestingWidget = () => {
       <TextField
         name={field.name}
         type={field.type}
-        variant="outlined"
+        customVariant="outlined"
         value={values[field.name]}
         onChange={handleChange}
         onBlur={handleBlur}
         placeholder={field.placeholder}
+        label={getHelperText(field.name) || field.placeholder}
         error={checkError(field.name)}
-        helperText={getHelperText(field.name)}
+        // helperText={getHelperText(field.name)}
         errorPosition="bottom"
         endIcon={field.endIcon}
       />
@@ -133,87 +141,64 @@ const LinearVestingWidget = () => {
     <OuterWrapper>
       <WidgetCard title="Linear Vesting">
         <Form onSubmit={handleSubmit}>
-          {getLinearVestingFields.map((item) => (
-            <FieldWrapper key={item.name} fullWidth={item.fullwidth}>
-              {getField(item)}
-            </FieldWrapper>
-          ))}
+          <FieldsWrapper>
+            {getLinearVestingFields.map((item) => (
+              <FieldWrapper key={item.name} fullWidth={item.fullwidth}>
+                {getField(item)}
+              </FieldWrapper>
+            ))}
+          </FieldsWrapper>
+
           <ButtonWrapper>
-            <Button type="submit" onKeyDown={(e) => e.preventDefault()}>
-              Submit
+            <Button type="submit" disabled={!isFormValid} onKeyDown={(e) => e.preventDefault()}>
+              <Typography color="gray.50" variant="paragraphMedium">
+                Submit
+              </Typography>
             </Button>
           </ButtonWrapper>
-          {isFormValid && (
-            <DetailsWrapper>
-              <DetailsItem>
-                <DetailsTitle>
-                  <Typography color="grey.A200" variant="paragraphSmall">
-                    Reward/period
-                  </Typography>
-                  <InfoBlackIcon />
-                </DetailsTitle>
-                <Typography color="grey.A200" variant="paragraphSmall">
-                  100 GENS
-                </Typography>
-              </DetailsItem>
-              <DetailsItem>
-                <DetailsTitle>
-                  <Typography color="grey.A200" variant="paragraphSmall">
-                    Vesting period
-                  </Typography>
-                  <InfoBlackIcon />
-                </DetailsTitle>
-                <Typography color="grey.A200" variant="paragraphSmall">
-                  10 days
-                </Typography>
-              </DetailsItem>
-              <DetailsItem>
-                <DetailsTitle>
-                  <Typography color="grey.A200" variant="paragraphSmall">
-                    Deposit
-                  </Typography>
-                  <InfoBlackIcon />
-                </DetailsTitle>
-                <Typography color="grey.A200" variant="paragraphSmall">
-                  1.7 ADA
-                </Typography>
-              </DetailsItem>
-              <DetailsItem>
-                <DetailsTitle>
-                  <Typography color="grey.A200" variant="paragraphSmall">
-                    Total Fee
-                  </Typography>
-                  <SmallArrowDown />
-                </DetailsTitle>
-                <Typography color="grey.A200" variant="paragraphSmall">
-                  2.45 ADA
-                </Typography>
-              </DetailsItem>
-            </DetailsWrapper>
-          )}
+          {!isFormValid && <LinearVestingFee isFormValid={isFormValid} />}
         </Form>
       </WidgetCard>
     </OuterWrapper>
   );
 };
 
+const Separator = styled("div")({
+  width: "100%",
+  height: "1px",
+  background: "#e6e6e6",
+});
+
+const TokenWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "24px",
+});
+
 const OuterWrapper = styled("div")({
-  width: "336px",
+  width: "400px",
+});
+
+const FieldsWrapper = styled("div")({
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+  rowGap: "24px",
+  padding: "20px",
+  background: "white",
+  boxShadow: "0px 10px 35px 0px rgba(0, 0, 0, 0.08)",
+  borderRadius: "12px",
 });
 
 const Form = styled("form")({
   display: "flex",
   flexWrap: "wrap",
   justifyContent: "space-between",
-  rowGap: "16px",
+  rowGap: "20px",
 });
 
 const FieldWrapper = styled("div")<{ fullWidth: boolean }>(({ fullWidth }) => ({
   width: fullWidth ? "100%" : "calc(50% - 8px)",
-
-  "& > div": {
-    rowGap: "4px",
-  },
 
   "& input::-webkit-inner-spin-button": {
     display: "none",
@@ -226,25 +211,8 @@ const ButtonWrapper = styled("div")({
   "& button": {
     width: "100%",
     height: "44px",
+    borderRadius: "4px",
   },
-});
-
-const DetailsWrapper = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  rowGap: "4px",
-  width: "100%",
-});
-
-const DetailsItem = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-});
-
-const DetailsTitle = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  columnGap: "4px",
 });
 
 export default LinearVestingWidget;
