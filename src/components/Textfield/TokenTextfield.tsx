@@ -98,14 +98,6 @@ const BalanceWrapper = styled("div")({
   columnGap: "6px",
 });
 
-const BalanceTypography = styled(Typography)({
-  lineHeight: "16px",
-});
-
-const NoTokenWrapper = styled("div")({
-  cursor: "pointer",
-});
-
 const TokenWrapper = styled("div")({
   display: "flex",
   alignItems: "center",

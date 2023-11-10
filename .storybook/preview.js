@@ -1,8 +1,13 @@
 import { useMemo } from "react";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { Provider } from "react-redux";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
+import store from "../src/redux/store";
 import { getTheme } from "../src/lib/theme/theme";
 import { mutateFontSizeResponsiveness } from "../src/lib/theme/responsiveTypography";
+import AllDialogs from "../src/components/Popups/AllDialogs";
 
 export const globalTypes = {
   theme: {
@@ -31,10 +36,15 @@ export const withMuiTheme = (Story, context) => {
   }, [themeKey]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Story />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Story />
+          <AllDialogs />
+        </LocalizationProvider>
+      </ThemeProvider>
+    </Provider>
   );
 };
 

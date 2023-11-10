@@ -14,6 +14,8 @@ const LinearVestingFee: FC<Props> = ({ isFormValid }) => {
     setIsOpen((prev) => !prev);
   };
 
+  console.log(isFormValid);
+
   return (
     <Wrapper>
       <DetailsWrapper>
