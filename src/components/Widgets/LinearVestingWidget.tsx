@@ -21,6 +21,7 @@ import { Popups } from "../../types/popups";
 import { useDispatch } from "react-redux";
 import { tokens } from "../../mock/tokens";
 import LinearVestingFee from "./components/LinearVestingFee";
+import { sanitizeValue } from "../../lib/decimalPrecision";
 
 const LinearVestingWidget = () => {
   const [initialyValidated, setInitialyValidated] = useState(false);
@@ -67,12 +68,21 @@ const LinearVestingWidget = () => {
     if (!currentToken) return;
     setFieldValue(LinearVestingFields.token, currentToken);
     dispatch(updatePopup({ popup: Popups.tokenSelection, status: false }));
+    setFieldValue(LinearVestingFields.tokenAmount, "");
   };
 
   const openPopup = () => {
     dispatch(
       updatePopup({ popup: Popups.tokenSelection, status: true, prefilled: { handleTokenClick: handleTokenSelect } }),
     );
+  };
+
+  const handleTokenAmountChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!values.token) return;
+    const newValue = sanitizeValue(event.target.value, values.token.decimalPrecision);
+    if (newValue === undefined) return;
+    event.target.value = newValue;
+    handleChange(event);
   };
 
   const getField = (field: LinearVestingSingleField) => {
@@ -88,7 +98,7 @@ const LinearVestingWidget = () => {
               type: field.type,
               customVariant: "text",
               value: values[field.name],
-              onChange: handleChange,
+              onChange: handleTokenAmountChange,
               onBlur: handleBlur,
               placeholder: field.placeholder,
               error: checkError(field.name),

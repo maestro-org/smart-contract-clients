@@ -7,14 +7,12 @@ interface Props {
   isFormValid: boolean;
 }
 
-const LinearVestingFee: FC<Props> = ({ isFormValid }) => {
+const LinearVestingFee: FC<Props> = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
   };
-
-  console.log(isFormValid);
 
   return (
     <Wrapper>
