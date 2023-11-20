@@ -14,7 +14,7 @@ export default {
   },
 } as ComponentMeta<typeof SuccessWidget>;
 
-const Template: ComponentStory<typeof SuccessWidget> = () => <SuccessWidget />;
+const Template: ComponentStory<typeof SuccessWidget> = () => <SuccessWidget title="Token Claim Completed" />;
 
 export const Success = Template.bind({});
 

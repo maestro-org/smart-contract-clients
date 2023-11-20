@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { styled, Typography } from "@mui/material";
-import { InfoBlackIcon, SmallArrowDown } from "../../Icons";
-import { InfoGrayIcon } from "../../Icons/InfoGrayIcon";
+import { InfoBlackIcon, SmallArrowDown } from "../../../Icons";
+import { InfoGrayIcon } from "../../../Icons/InfoGrayIcon";
 
 interface Props {
   isFormValid: boolean;

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import Card from "../Card/Card";
-import { Typography, styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
+
 import { CheckmarkCircleIcon, SuccessShapesIcon } from "../Icons";
 
-const SuccessWidget = () => {
+interface Props {
+  title: string;
+}
+
+const SuccessWidget: FC<Props> = ({ title }) => {
   return (
     <OuterWrapper>
       <Card>
@@ -11,7 +16,7 @@ const SuccessWidget = () => {
           <MessageWrapper>
             <CheckmarkCircleIcon />
             <Typography variant="paragraphLarge" color="grey.A200">
-              Token Claim Completed
+              {title}
             </Typography>
           </MessageWrapper>
         </Content>

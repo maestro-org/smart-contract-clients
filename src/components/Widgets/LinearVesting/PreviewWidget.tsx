@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Card from "../Card/Card";
-import { Typography, styled } from "@mui/material";
-import { Button } from "../Button/Button";
-import { MeastroLogo, SmallArrowDown } from "../Icons";
-import { InfoGrayIcon } from "../Icons/InfoGrayIcon";
+import Card from "../../Card/Card";
+import { styled, Typography } from "@mui/material";
+import { Button } from "../../Button/Button";
+import { MeastroLogo, SmallArrowDown } from "../../Icons";
+import { InfoGrayIcon } from "../../Icons/InfoGrayIcon";
 
 const PreviewWidget = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,27 +1,27 @@
-import { Typography, styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 
-import { getLinearVestingFields, initialValuesLinearVesting } from "../../forms/linearVesting/form";
-import { linearVestingSchema } from "../../forms/linearVesting/validation";
+import { getLinearVestingFields, initialValuesLinearVesting } from "../../../forms/linearVesting/form";
+import { linearVestingSchema } from "../../../forms/linearVesting/validation";
 import {
   LinearVestingFields,
   LinearVestingFormValues,
   LinearVestingSingleField,
-} from "../../forms/linearVesting/types";
+} from "../../../forms/linearVesting/types";
 
-import WidgetCard from "../Card/WidgetCard";
-import { TextField } from "../Textfield/Textfield";
-import { Button } from "../Button/Button";
-import TokenTextfield from "../Textfield/TokenTextfield";
-import DatePicker from "../DatePicker/DatePicker";
-import { DateIcon } from "../Icons";
-import { updatePopup } from "../../redux/actions/popupsActions";
-import { Popups } from "../../types/popups";
+import WidgetCard from "../../Card/WidgetCard";
+import { TextField } from "../../Textfield/Textfield";
+import { Button } from "../../Button/Button";
+import TokenTextfield from "../../Textfield/TokenTextfield";
+import DatePicker from "../../DatePicker/DatePicker";
+import { DateIcon } from "../../Icons";
+import { updatePopup } from "../../../redux/actions/popupsActions";
+import { Popups } from "../../../types/popups";
 import { useDispatch } from "react-redux";
-import { tokens } from "../../mock/tokens";
+import { tokens } from "../../../mock/tokens";
 import LinearVestingFee from "./components/LinearVestingFee";
-import { sanitizeValue } from "../../lib/decimalPrecision";
+import { sanitizeValue } from "../../../lib/decimalPrecision";
 
 const LinearVestingWidget = () => {
   const [initialyValidated, setInitialyValidated] = useState(false);

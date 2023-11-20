@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 
 import { customArgTypes } from "../../lib/customStoryArgTypes";
-import PreviewWidget from "../../components/Widgets/PreviewWidget";
+import PreviewWidget from "../../components/Widgets/LinearVesting/PreviewWidget";
 
 const hideProps = [""];
 
