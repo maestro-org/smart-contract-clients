@@ -8,3 +8,8 @@ export { InfoBlackIcon } from "./InfoBlackIcon";
 export { SmallArrowDown } from "./SmallArrowDown";
 export { CloseDialogIcon } from "./CloseDialogIcon";
 export { SearchIcon } from "./SearchIcon";
+export { SuccessShapesIcon } from "./SuccessShapesIcon";
+export { CheckmarkCircleIcon } from "./CheckmarkCircleIcon";
+export { SmallDropdownIcon } from "./SmallDropdownIcon";
+export { SwapIcon } from "./SwapIcon";
+export { ArrowBottomLeftIcon } from "./ArrowBottomLeftIcon";

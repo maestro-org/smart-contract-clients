@@ -8,6 +8,7 @@ export const tokens: Token[] = [
     name: "ADA",
     amount: 996.83,
     price: 514.36,
+    decimalPrecision: 1,
   },
   {
     company: "Coti",
@@ -16,6 +17,7 @@ export const tokens: Token[] = [
     name: "COTI",
     amount: 3200,
     price: 1235.2,
+    decimalPrecision: 4,
   },
   {
     company: "Feather Coin",
@@ -24,6 +26,7 @@ export const tokens: Token[] = [
     name: "FTC",
     amount: 4000,
     price: 28.33,
+    decimalPrecision: 0,
   },
   {
     company: "Genius Yield",
@@ -32,5 +35,6 @@ export const tokens: Token[] = [
     name: "GENS",
     amount: 1230,
     price: 257.808,
+    decimalPrecision: 6,
   },
 ];

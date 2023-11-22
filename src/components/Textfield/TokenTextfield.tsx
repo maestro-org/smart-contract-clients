@@ -3,6 +3,8 @@ import React from "react";
 import { TextField, TextFieldProps } from "./Textfield";
 import { numberDecorator } from "../../lib/numberDecorator";
 import { Token } from "../../types/token";
+import { Button } from "../Button/Button";
+import { SmallDropdownIcon } from "../Icons";
 
 interface Props {
   textfield: TextFieldProps;
@@ -14,36 +16,65 @@ interface Props {
 const TokenTextfield = ({ balance, textfield, token, handleClick }: Props) => {
   return (
     <Wrapper>
-      <BalanceWrapper>
-        <BalanceTypography color="primary.main" variant="paragraphSmall">
-          Balance:
-        </BalanceTypography>
-        <BalanceTypography color="primary.main" variant="paragraphSmall">
-          {numberDecorator(balance)}
-        </BalanceTypography>
-      </BalanceWrapper>
-      <TextField
-        {...textfield}
-        startIcon={
-          token ? (
-            <TokenWrapper onClick={handleClick}>
+      <Row>
+        <Typography variant="paragraphSmall" color="grey.A200">
+          Deposit
+        </Typography>
+        <BalanceWrapper>
+          <Typography variant="article" color="primary.main">
+            Balance:
+          </Typography>
+          <Typography variant="article" color="primary.main">
+            {numberDecorator(balance)}
+          </Typography>
+        </BalanceWrapper>
+      </Row>
+
+      <Row>
+        <AddTokenButton onClick={handleClick}>
+          {token ? (
+            <TokenWrapper>
               <TokenLogo src={token.logo} alt={token.name} />
               <Typography color="grey.A200" variant="paragraphMedium">
                 {token.name}
               </Typography>
+              <SmallDropdownIcon />
             </TokenWrapper>
           ) : (
-            <NoTokenWrapper onClick={handleClick}>
-              <Typography variant="paragraphMedium" color="primary.main">
-                + Token
+            <>
+              <Typography variant="paragraphSmall" color="grey.A200">
+                +
               </Typography>
-            </NoTokenWrapper>
-          )
-        }
-      />
+              <Typography variant="paragraphSmall" color="grey.A200">
+                Add token
+              </Typography>
+            </>
+          )}
+        </AddTokenButton>
+
+        <TextField {...textfield} />
+      </Row>
     </Wrapper>
   );
 };
+
+const AddTokenButton = styled(Button)(({ theme }) => ({
+  padding: "4px 12px",
+  gap: "6px",
+  background: theme.palette.grey["50"],
+  borderRadius: "57px",
+  minWidth: "107px",
+
+  "&:hover": {
+    background: theme.palette.grey["100"],
+  },
+}));
+
+const Row = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -64,27 +95,19 @@ const Wrapper = styled("div")({
 const BalanceWrapper = styled("div")({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-end",
   columnGap: "6px",
-});
-
-const BalanceTypography = styled(Typography)({
-  lineHeight: "16px",
-});
-
-const NoTokenWrapper = styled("div")({
-  cursor: "pointer",
 });
 
 const TokenWrapper = styled("div")({
   display: "flex",
   alignItems: "center",
-  columnGap: "8px",
+  justifyContent: "space-between",
+  columnGap: "6px",
   cursor: "pointer",
 });
 
 const TokenLogo = styled("img")({
-  height: "23px",
+  height: "20px",
 });
 
 export default TokenTextfield;

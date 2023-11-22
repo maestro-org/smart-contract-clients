@@ -3,7 +3,7 @@ import { LinearVestingFields, LinearVestingFormValues, LinearVestingSingleField 
 
 export const initialValuesLinearVesting: LinearVestingFormValues = {
   [LinearVestingFields.token]: null,
-  [LinearVestingFields.tokenAmount]: null,
+  [LinearVestingFields.tokenAmount]: "",
   [LinearVestingFields.startDate]: null,
   [LinearVestingFields.endDate]: null,
   [LinearVestingFields.numOfInstallments]: null,
@@ -12,9 +12,9 @@ export const initialValuesLinearVesting: LinearVestingFormValues = {
 
 export const getLinearVestingFields: LinearVestingSingleField[] = [
   {
-    type: "number",
+    type: "text",
     name: LinearVestingFields.tokenAmount,
-    placeholder: "0.0",
+    placeholder: "0.00000000",
     fullwidth: true,
     tokenInput: true,
   },

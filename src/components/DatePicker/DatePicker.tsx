@@ -4,21 +4,17 @@ import { Typography, styled } from "@mui/material";
 
 interface CustomProps {
   errorPosition?: "top" | "bottom";
-  label?: string | React.ReactNode;
   helperText?: string;
   error?: boolean;
 }
 
 type Props = CustomProps & DatePickerProps<any>;
 
-const DatePicker = ({ errorPosition, label, helperText, error, ...props }: Props) => {
+const DatePicker = ({ errorPosition, helperText, error, ...props }: Props) => {
   return (
     <Wrapper>
-      {(label || (helperText && errorPosition === "top")) && (
+      {helperText && errorPosition === "top" && (
         <TitleWrapper>
-          <Typography color="textfield.textColor" variant="paragraphSmall">
-            {label}
-          </Typography>
           <DisplayWithCondition show={errorPosition === "top"}>
             <Typography color="textfield.errorText" variant="paragraphSmall">
               {helperText}
@@ -56,24 +52,31 @@ const DisplayWithCondition = styled("span")<{ show: boolean }>(({ show }) => ({
 const StyledDatePicker = styled(MuiDatePicker)<{ error?: boolean }>(({ theme, error }) => ({
   maxWidth: "100%",
   width: "100%",
+  height: "48px",
 
   "& .MuiInputBase-root": {
-    height: "auto",
+    height: "48px",
+  },
+
+  input: {
+    height: "10px",
+    padding: "1px 12px",
   },
 
   "& .MuiInputBase-input": {
     zIndex: 10,
   },
 
-  "& .MuiInputBase-input::placeholder": {
+  "& .MuiInputBase-input::placeholder, & label": {
     color: `${theme.palette.textfield.placeholder.main} !important`,
     opacity: 1,
+    top: "-3px",
   },
 
   "& .MuiOutlinedInput-notchedOutline": {
     border: `1px solid ${theme.palette.textfield.border.main}`,
     borderWidth: "1px !important",
-    backgroundColor: theme.palette.textfield.background,
+    backgroundColor: "transparent",
     borderRadius: theme.borderRadius.xxs,
     transition: "0.3s",
   },
@@ -91,7 +94,7 @@ const StyledDatePicker = styled(MuiDatePicker)<{ error?: boolean }>(({ theme, er
     borderColor: theme.palette.textfield.border.hover,
   },
 
-  "& .MuiInputBase-root:hover .MuiInputBase-input::placeholder": {
+  "& .MuiInputBase-root:hover .MuiInputBase-input::placeholder, & .MuiInputBase-root:hover label": {
     color: `${theme.palette.textfield.placeholder.hover} !important`,
     opacity: 1,
   },
@@ -103,6 +106,10 @@ const StyledDatePicker = styled(MuiDatePicker)<{ error?: boolean }>(({ theme, er
   "& .Mui-focused .MuiInputBase-input::placeholder": {
     color: `${theme.palette.textfield.placeholder.focus} !important`,
     opacity: 1,
+  },
+
+  "& label.Mui-focused": {
+    color: `${theme.palette.primary.main} !important`,
   },
 
   "& .MuiInputAdornment-root": {
@@ -131,6 +138,10 @@ const StyledDatePicker = styled(MuiDatePicker)<{ error?: boolean }>(({ theme, er
     "-webkit-text-fill-color": theme.palette.textfield.placeholder.disable,
     color: `${theme.palette.textfield.placeholder.disable} !important`,
     opacity: 1,
+  },
+
+  "& label.Mui-error": {
+    color: `${theme.palette.textfield.errorText} !important`,
   },
 
   ...(error

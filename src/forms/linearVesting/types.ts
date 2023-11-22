@@ -3,7 +3,7 @@ import { Token } from "../../types/token";
 
 export interface LinearVestingFormValues {
   token: Token | null;
-  tokenAmount: number | null;
+  tokenAmount: string;
   startDate: Date | null;
   endDate: Date | null;
   numOfInstallments: number | null;

@@ -5,4 +5,5 @@ export interface Token {
   price: number;
   logo: string;
   amount: number;
+  decimalPrecision: number;
 }

@@ -1,19 +1,20 @@
-module.exports = {
-  "stories": [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
+const path = require("path");
 
-  "addons": [
+module.exports = {
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+
+  addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/preset-create-react-app",
-    "storybook-addon-react-router-v6"
+    "storybook-addon-react-router-v6",
   ],
 
-  "framework": {
+  framework: {
     name: "@storybook/react-webpack5",
-    options: {}
-  }
-}
+    options: {},
+  },
+
+  staticDirs: ["../public"],
+};
