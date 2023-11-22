@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { styled, Typography } from "@mui/material";
 
 import WidgetCard from "../../Card/WidgetCard";
@@ -6,26 +6,48 @@ import SummaryCard from "./components/SummaryCard";
 import { Button } from "../../Button/Button";
 import SummaryCardFee from "./components/SummaryCardFee";
 import { SwapHorizontalIcon } from "../../Icons/SwapHorizontalIcon";
+import { SwapData } from "./DirectSwapWidget";
 
-const SummaryWidget = () => {
+interface Props {
+  sellData: SwapData[];
+  receiveData: SwapData[];
+  onNext: () => void;
+  handleSwap: () => void;
+}
+
+const SummaryWidget: FC<Props> = ({ sellData, receiveData, onNext, handleSwap }) => {
+  console.log(sellData);
+
+  const formatData = (data: SwapData[]) => {
+    return data.reduce<{ images: string[]; prices: string[] }>(
+      (accumulator, elem) => {
+        if (elem.asset) {
+          accumulator.images.push(elem.asset.logo || "");
+          accumulator.prices.push(`${elem.value} ${elem.asset.name}`);
+        }
+        return accumulator;
+      },
+      { images: [], prices: [] },
+    );
+  };
+
   return (
     <OuterWrapper>
       <WidgetCard withoutLogo={true} title="Swap Summary">
         <CardsWrapper>
-          <SummaryCard title="Buy" images={["/images/tokens/GeniusYield.png"]} prices={["1.234 GENS"]} />
-          <SwapButton>
+          {/*Recieve data*/}
+          <SummaryCard title="Buy" {...formatData(receiveData)} />
+          <SwapButton onClick={handleSwap}>
             <IconWrapper>
               <SwapHorizontalIcon />
             </IconWrapper>
           </SwapButton>
-          <SummaryCard
-            title="For"
-            images={["/images/tokens/GeniusYield.png", "/images/tokens/GeniusYield.png"]}
-            prices={["1.234 ADA", "123 MIN"]}
-          />
+
+          {/*Sell data*/}
+          <SummaryCard title="For" {...formatData(sellData)} />
         </CardsWrapper>
         <ButtonWrapper>
-          <Button type="submit" disabled={false} onKeyDown={(e) => e.preventDefault()}>
+          <Button type="submit" disabled={false} onClick={onNext} onKeyDown={(e) => e.preventDefault()}>
             <Typography color="gray.50" variant="paragraphMedium">
               Submit
             </Typography>

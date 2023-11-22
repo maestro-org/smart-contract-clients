@@ -15,12 +15,12 @@ const SummaryCard: FC<Props> = ({ title, prices, images }) => {
       </Typography>
       <Items>
         <ImagesWrapper>
-          {images.map((elem, index) =>
+          {images?.map((elem, index) =>
             index === 0 ? <BigImage key={elem} src={elem} /> : <SmallImage key={elem} src={elem} />,
           )}
         </ImagesWrapper>
         <PricesWrapper>
-          {prices.map((elem) => (
+          {prices?.map((elem) => (
             <Typography key={elem} color="grey.A200" variant="paragraphMedium">
               {elem}
             </Typography>

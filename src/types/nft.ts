@@ -3,4 +3,5 @@ export interface Nft {
   name: string;
   logo: string;
   percentage: string;
+  decimalPrecision: number;
 }

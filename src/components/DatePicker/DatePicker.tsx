@@ -70,6 +70,7 @@ const StyledDatePicker = styled(MuiDatePicker)<{ error?: boolean }>(({ theme, er
   "& .MuiInputBase-input::placeholder, & label": {
     color: `${theme.palette.textfield.placeholder.main} !important`,
     opacity: 1,
+    top: "-3px",
   },
 
   "& .MuiOutlinedInput-notchedOutline": {

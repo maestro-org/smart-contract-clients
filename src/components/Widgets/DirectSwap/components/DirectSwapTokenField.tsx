@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import { updatePopup } from "../../../../redux/actions/popupsActions";
 import { Popups } from "../../../../types/popups";
 import { Nft } from "../../../../types/nft";
 import { Token } from "../../../../types/token";
+import { sanitizeValue } from "../../../../lib/decimalPrecision";
 
 interface Props {
   setData: Dispatch<SetStateAction<SwapData[]>>;
@@ -38,6 +39,12 @@ const DirectSwapTokenField: FC<Props & SwapData> = ({ id, asset, value, setData 
   };
 
   const onChange = (event: any) => {
+    handleChange(event);
+    if (!asset) return;
+
+    const newValue = sanitizeValue(event.target.value, asset.decimalPrecision);
+    if (newValue === undefined) return;
+    event.target.value = newValue;
     setData((prev) => prev.map((elem) => (elem.id === id ? { ...elem, value: event.target.value } : elem)));
     handleChange(event);
   };
@@ -50,6 +57,10 @@ const DirectSwapTokenField: FC<Props & SwapData> = ({ id, asset, value, setData 
       enableReinitialize: true,
       onSubmit,
     });
+
+  useEffect(() => {
+    setData((prev) => prev.map((elem) => (elem.id === id ? { ...elem, isValid: isValid && !!value.length } : elem)));
+  }, [isValid, value]);
 
   return (
     <Wrapper>
