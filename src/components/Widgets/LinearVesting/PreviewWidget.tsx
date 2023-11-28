@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import Card from "../../Card/Card";
 import { styled, Typography } from "@mui/material";
+import React, { FC, useState } from "react";
+
+import Card from "../../Card/Card";
 import { Button } from "../../Button/Button";
 import { MeastroLogo, SmallArrowDown } from "../../Icons";
 import { InfoGrayIcon } from "../../Icons/InfoGrayIcon";
 
-const PreviewWidget = () => {
+interface Props {
+  onNext?: () => void;
+}
+
+const PreviewWidget: FC<Props> = ({ onNext }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => setIsOpen((prev) => !prev);
@@ -61,7 +66,9 @@ const PreviewWidget = () => {
               3,125 GENS
             </Typography>
           </RewardsTop>
-          <Button variant="secondary">Claim</Button>
+          <Button variant="secondary" onClick={onNext}>
+            Claim
+          </Button>
           <TotalFeeWrapper>
             <FeeItem clickable={true} open={isOpen} onClick={handleClick}>
               <WithIcon>

@@ -81,7 +81,7 @@ const getCustomVariant = (theme: Theme) => ({
   },
   outlined: {
     backgroundColor: "transparent",
-    border: `2px solid ${theme.palette.checkbox.colored.outlined}`,
+    boxShadow: `inset 0px 0px 0px 2px ${theme.palette.checkbox.colored.outlined}`,
     transition: ".3s",
   },
 });

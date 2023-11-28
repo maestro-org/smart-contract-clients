@@ -1,19 +1,22 @@
 import { Typography, styled } from "@mui/material";
 import React from "react";
 import { TextField, TextFieldProps } from "./Textfield";
-import { numberDecorator } from "../../lib/numberDecorator";
 import { Token } from "../../types/token";
 import { Button } from "../Button/Button";
 import { SmallDropdownIcon } from "../Icons";
+import { useSelector } from "react-redux";
+import { getWalletBalance } from "../../redux/reducers/walletReducer";
 
 interface Props {
   textfield: TextFieldProps;
-  balance: number;
   handleClick: () => void;
   token?: Token;
 }
 
-const TokenTextfield = ({ balance, textfield, token, handleClick }: Props) => {
+const TokenTextfield = ({ textfield, token, handleClick }: Props) => {
+  const walletBalance = useSelector(getWalletBalance);
+  const currentBalance = walletBalance || 0;
+
   return (
     <Wrapper>
       <Row>
@@ -25,7 +28,7 @@ const TokenTextfield = ({ balance, textfield, token, handleClick }: Props) => {
             Balance:
           </Typography>
           <Typography variant="article" color="primary.main">
-            {numberDecorator(balance)}
+            {currentBalance}
           </Typography>
         </BalanceWrapper>
       </Row>

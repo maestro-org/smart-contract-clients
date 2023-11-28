@@ -1,6 +1,6 @@
 import { styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { getLinearVestingFields, initialValuesLinearVesting } from "../../../forms/linearVesting/form";
 import { linearVestingSchema } from "../../../forms/linearVesting/validation";
@@ -19,17 +19,25 @@ import { DateIcon } from "../../Icons";
 import { updatePopup } from "../../../redux/actions/popupsActions";
 import { Popups } from "../../../types/popups";
 import { useDispatch } from "react-redux";
-import { tokens } from "../../../mock/tokens";
 import LinearVestingFee from "./components/LinearVestingFee";
 import { sanitizeValue } from "../../../lib/decimalPrecision";
+import { Token } from "../../../types/token";
+import { useWallet } from "../../../hooks/useWallet";
+import ConnectWalletButton from "../../Button/ConnectWalletButton";
 
-const LinearVestingWidget = () => {
+interface Props {
+  onNext?: () => void;
+}
+
+const LinearVestingWidget: FC<Props> = ({ onNext }) => {
   const [initialyValidated, setInitialyValidated] = useState(false);
+  const { isConnected } = useWallet();
 
   const dispatch = useDispatch();
 
   const onSubmit = (values: LinearVestingFormValues) => {
     console.log(values);
+    if (onNext) onNext();
   };
 
   const { values, touched, errors, isValid, validateForm, handleChange, handleBlur, setFieldValue, handleSubmit } =
@@ -63,10 +71,9 @@ const LinearVestingWidget = () => {
 
   const isFormValid = initialyValidated && isValid;
 
-  const handleTokenSelect = (id: string) => {
-    const currentToken = tokens.find((token) => token.id === id);
-    if (!currentToken) return;
-    setFieldValue(LinearVestingFields.token, currentToken);
+  const handleTokenSelect = (token: Token) => {
+    if (!token) return;
+    setFieldValue(LinearVestingFields.token, token);
     dispatch(updatePopup({ popup: Popups.tokenSelection, status: false }));
     setFieldValue(LinearVestingFields.tokenAmount, "");
   };
@@ -90,7 +97,6 @@ const LinearVestingWidget = () => {
       return (
         <TokenWrapper className="123">
           <TokenTextfield
-            balance={230}
             handleClick={openPopup}
             token={values.token || undefined}
             textfield={{
@@ -160,13 +166,24 @@ const LinearVestingWidget = () => {
           </FieldsWrapper>
 
           <ButtonWrapper>
-            <Button type="submit" disabled={!isFormValid} onKeyDown={(e) => e.preventDefault()}>
-              <Typography color="gray.50" variant="paragraphMedium">
-                Submit
-              </Typography>
-            </Button>
+            {isConnected ? (
+              <Button type="submit" disabled={!isFormValid} onKeyDown={(e) => e.preventDefault()}>
+                <Typography color="gray.50" variant="paragraphMedium">
+                  Submit
+                </Typography>
+              </Button>
+            ) : (
+              <ConnectWalletButton />
+            )}
           </ButtonWrapper>
-          {!isFormValid && <LinearVestingFee isFormValid={isFormValid} />}
+          <LinearVestingFee
+            isFormValid={isFormValid}
+            tokenAmount={values.tokenAmount}
+            numberOfInstallments={values.numOfInstallments}
+            token={values.token}
+            startDate={values.startDate}
+            endDate={values.endDate}
+          />
         </Form>
       </WidgetCard>
     </OuterWrapper>
