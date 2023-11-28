@@ -55,6 +55,7 @@
     "no-use-before-define": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-useless-escape": "off",
+    "no-useless-catch": "off",
     "no-underscore-dangle": "off",
     "react/require-default-props": "off",
     "react-hooks/exhaustive-deps": "off",

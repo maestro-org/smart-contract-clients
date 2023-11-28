@@ -1,17 +1,53 @@
 import React, { FC, useState } from "react";
 import { styled, Typography } from "@mui/material";
+
 import { InfoBlackIcon, SmallArrowDown } from "../../../Icons";
 import { InfoGrayIcon } from "../../../Icons/InfoGrayIcon";
+import { Token } from "../../../../types/token";
 
 interface Props {
   isFormValid: boolean;
+  tokenAmount: string;
+  numberOfInstallments: number | null;
+  token: Token | null;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
-const LinearVestingFee: FC<Props> = () => {
+const formatDuration = (startDate: Date, endDate: Date): string => {
+  const timeDifference = endDate.getTime() - startDate.getTime();
+  const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+  const months = Math.floor(daysDifference / 30);
+  const remainingDays = Math.floor(daysDifference % 30);
+
+  const formatNumber = (value: number): string => new Intl.NumberFormat("en").format(value);
+
+  if (months === 0) {
+    return `${formatNumber(remainingDays)} day${remainingDays !== 1 ? "s" : ""}`;
+  } else {
+    const monthStr = `${formatNumber(months)} month${months !== 1 ? "s" : ""}`;
+    const dayStr = remainingDays > 0 ? ` ${formatNumber(remainingDays)} day${remainingDays !== 1 ? "s" : ""}` : "";
+    return `${monthStr}${dayStr}`;
+  }
+};
+
+const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token, startDate, endDate, isFormValid }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const getRewardPeriod = () => {
+    if (!tokenAmount || !numberOfInstallments || !token) return "-";
+    return `${Math.round((Number(tokenAmount) / numberOfInstallments) * 100) / 100} ${token.name}`;
+  };
+
+  const getVestingPeriod = () => {
+    if (!startDate || !endDate) return "-";
+
+    return formatDuration(startDate, endDate);
   };
 
   return (
@@ -25,7 +61,7 @@ const LinearVestingFee: FC<Props> = () => {
             <InfoBlackIcon />
           </DetailsTitle>
           <Typography color="grey.A200" variant="paragraphSmall">
-            100 GENS
+            {getRewardPeriod()}
           </Typography>
         </DetailsItem>
         <DetailsItem>
@@ -36,7 +72,7 @@ const LinearVestingFee: FC<Props> = () => {
             <InfoBlackIcon />
           </DetailsTitle>
           <Typography color="grey.A200" variant="paragraphSmall">
-            10 days
+            {getVestingPeriod()}
           </Typography>
         </DetailsItem>
         <DetailsItem>
@@ -47,7 +83,7 @@ const LinearVestingFee: FC<Props> = () => {
             <InfoBlackIcon />
           </DetailsTitle>
           <Typography color="grey.A200" variant="paragraphSmall">
-            1.7 ADA
+            {isFormValid ? "1.7 ADA" : "-"}
           </Typography>
         </DetailsItem>
         <DetailsItem clickable={true} open={isOpen} onClick={handleClick}>
@@ -58,7 +94,7 @@ const LinearVestingFee: FC<Props> = () => {
             <SmallArrowDown />
           </DetailsTitle>
           <Typography color="grey.A200" variant="paragraphSmall">
-            2.45 ADA
+            {isFormValid ? "2.45 ADA" : "-"}
           </Typography>
         </DetailsItem>
       </DetailsWrapper>
@@ -74,7 +110,7 @@ const LinearVestingFee: FC<Props> = () => {
                 <InfoGrayIcon />
               </DetailsTitle>
               <Typography color="grey.400" variant="paragraphSmall">
-                0.17 ADA
+                {isFormValid ? "0.17 ADA" : "-"}
               </Typography>
             </DetailsItem>
             <DetailsItem>
@@ -85,7 +121,7 @@ const LinearVestingFee: FC<Props> = () => {
                 <InfoGrayIcon />
               </DetailsTitle>
               <Typography color="grey.400" variant="paragraphSmall">
-                1.7 ADA
+                {isFormValid ? "1.7 ADA" : "-"}
               </Typography>
             </DetailsItem>
             <DetailsItem>
@@ -96,7 +132,7 @@ const LinearVestingFee: FC<Props> = () => {
                 <InfoGrayIcon />
               </DetailsTitle>
               <Typography color="grey.400" variant="paragraphSmall">
-                1. ADA
+                {isFormValid ? "1 ADA" : "-"}
               </Typography>
             </DetailsItem>
           </DetailsWrapper>

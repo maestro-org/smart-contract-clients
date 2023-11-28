@@ -76,7 +76,7 @@ const DirectSwapStep1: FC<Props> = ({ sellData, receiveData, setSellData, setRec
                 key={elem.id}
                 elem={elem}
                 setData={setReceiveData}
-                withSeparator={sellData.length - 1 > index}
+                withSeparator={receiveData.length - 1 > index}
               />
             ))}
             <AddText onClick={handleAddData(setReceiveData)}>

@@ -1,8 +1,10 @@
-import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import { styled, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import DirectSwapTokenField from "./DirectSwapTokenField";
 import { SwapData } from "../DirectSwapWidget";
+import { getWalletBalance } from "../../../../redux/reducers/walletReducer";
 
 interface Props {
   title: string;
@@ -12,8 +14,11 @@ interface Props {
 }
 
 const DirectSwapItem: FC<Props> = ({ title, elem, withSeparator, setData }) => {
+  const walletBalance = useSelector(getWalletBalance);
+  const currentBalance = walletBalance || "0";
+
   const handleSetMax = () => {
-    setData((prev) => prev.map((item) => (item.id === elem.id ? { ...item, value: elem.balance } : item)));
+    setData((prev) => prev.map((item) => (item.id === elem.id ? { ...item, value: currentBalance } : item)));
   };
 
   return (
@@ -25,7 +30,7 @@ const DirectSwapItem: FC<Props> = ({ title, elem, withSeparator, setData }) => {
           </Typography>
           <BalanceWrapper>
             <Typography variant="article" color="grey.400">
-              Balance: {elem.balance}
+              Balance: {currentBalance}
             </Typography>
             <MaxTypography variant="article" color="primary.main" onClick={handleSetMax}>
               MAX
