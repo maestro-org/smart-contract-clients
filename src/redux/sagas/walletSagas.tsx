@@ -125,13 +125,19 @@ export function* connectWallet(action: ReturnType<typeof walletConnect>): any {
   }
 
   async function getWalletAddress(wallet: any) {
+    const balance = await wallet.getBalance();
+    const utxos = await wallet.getUtxos();
+
+    console.log("balance", balance);
+    console.log("utxos", utxos);
+
     if (wallet?.getChangeAddress) {
       const reward = await wallet?.getRewardAddresses();
       if (reward.length > 0) {
         try {
           const { stake, networkId } = decodeHexAddress(reward[0]);
           if (networkId !== 1) {
-            throw "WRONG_NETWORK";
+            // throw "WRONG_NETWORK";
           }
           return stake;
         } catch (error) {
@@ -143,7 +149,7 @@ export function* connectWallet(action: ReturnType<typeof walletConnect>): any {
       const networkId = await wallet?.getNetworkId();
       // console.log("This is typhon edge case -> ", networkId.data);
       if (networkId.data !== 1) {
-        throw "WRONG_NETWORK";
+        // throw "WRONG_NETWORK";
       }
       return rewardAddress.data;
     }

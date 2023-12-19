@@ -6,7 +6,6 @@ import { InfoGrayIcon } from "../../../Icons/InfoGrayIcon";
 import { Token } from "../../../../types/token";
 
 interface Props {
-  isFormValid: boolean;
   tokenAmount: string;
   numberOfInstallments: number | null;
   token: Token | null;
@@ -32,7 +31,7 @@ const formatDuration = (startDate: Date, endDate: Date): string => {
   }
 };
 
-const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token, startDate, endDate, isFormValid }) => {
+const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token, startDate, endDate }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
@@ -83,7 +82,7 @@ const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token,
             <InfoBlackIcon />
           </DetailsTitle>
           <Typography color="grey.A200" variant="paragraphSmall">
-            {isFormValid ? "1.7 ADA" : "-"}
+            1.7 ADA
           </Typography>
         </DetailsItem>
         <DetailsItem clickable={true} open={isOpen} onClick={handleClick}>
@@ -94,7 +93,7 @@ const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token,
             <SmallArrowDown />
           </DetailsTitle>
           <Typography color="grey.A200" variant="paragraphSmall">
-            {isFormValid ? "2.45 ADA" : "-"}
+            2.45 ADA
           </Typography>
         </DetailsItem>
       </DetailsWrapper>
@@ -110,7 +109,7 @@ const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token,
                 <InfoGrayIcon />
               </DetailsTitle>
               <Typography color="grey.400" variant="paragraphSmall">
-                {isFormValid ? "0.17 ADA" : "-"}
+                0.17 ADA
               </Typography>
             </DetailsItem>
             <DetailsItem>
@@ -121,7 +120,7 @@ const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token,
                 <InfoGrayIcon />
               </DetailsTitle>
               <Typography color="grey.400" variant="paragraphSmall">
-                {isFormValid ? "1.7 ADA" : "-"}
+                1.7 ADA
               </Typography>
             </DetailsItem>
             <DetailsItem>
@@ -132,7 +131,7 @@ const LinearVestingFee: FC<Props> = ({ tokenAmount, numberOfInstallments, token,
                 <InfoGrayIcon />
               </DetailsTitle>
               <Typography color="grey.400" variant="paragraphSmall">
-                {isFormValid ? "1 ADA" : "-"}
+                1 ADA
               </Typography>
             </DetailsItem>
           </DetailsWrapper>

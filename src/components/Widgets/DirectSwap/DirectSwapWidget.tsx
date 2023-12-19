@@ -5,6 +5,7 @@ import { Nft } from "../../../types/nft";
 import DirectSwapStep1 from "./DirectSwapStep1";
 import SummaryWidget from "./SummaryWidget";
 import SuccessWidget from "../SuccessWidget";
+import ActionButton from "../../Button/ActionButton";
 
 export interface SwapData {
   id: string;
@@ -38,6 +39,7 @@ const DirectSwapWidget = () => {
   };
 
   const getStep = [
+    <ActionButton key={0} onClick={handleNextStep} title="+ Direct Swap" />,
     <DirectSwapStep1
       key="1"
       sellData={sellData}
