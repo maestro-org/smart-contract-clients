@@ -3,6 +3,7 @@ import LinearVestingWidget from "../../components/Widgets/LinearVesting/LinearVe
 import PreviewWidget from "../../components/Widgets/LinearVesting/PreviewWidget";
 import SuccessWidget from "../../components/Widgets/SuccessWidget";
 import LinearVestingActionButton from "../../components/Widgets/LinearVesting/components/LinearVestingActionButton";
+import ActionButton from "../../components/Button/ActionButton";
 
 const LinearVestingPage = () => {
   const [step, setStep] = useState(0);
@@ -12,7 +13,7 @@ const LinearVestingPage = () => {
   };
 
   const getStep = [
-    <LinearVestingActionButton key={0} onNext={handleChangeStep(1)} />,
+    <ActionButton key={0} onClick={handleChangeStep(1)} title="+ Linear Vesting" />,
     <LinearVestingWidget key={1} onNext={handleChangeStep(2)} />,
     <PreviewWidget key={2} onNext={handleChangeStep(3)} />,
     <SuccessWidget key={3} title="Token Claim Completed" />,

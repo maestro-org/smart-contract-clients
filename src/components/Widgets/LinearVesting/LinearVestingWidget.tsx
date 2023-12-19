@@ -176,14 +176,16 @@ const LinearVestingWidget: FC<Props> = ({ onNext }) => {
               <ConnectWalletButton />
             )}
           </ButtonWrapper>
-          <LinearVestingFee
-            isFormValid={isFormValid}
-            tokenAmount={values.tokenAmount}
-            numberOfInstallments={values.numOfInstallments}
-            token={values.token}
-            startDate={values.startDate}
-            endDate={values.endDate}
-          />
+
+          {isFormValid && (
+            <LinearVestingFee
+              tokenAmount={values.tokenAmount}
+              numberOfInstallments={values.numOfInstallments}
+              token={values.token}
+              startDate={values.startDate}
+              endDate={values.endDate}
+            />
+          )}
         </Form>
       </WidgetCard>
     </OuterWrapper>

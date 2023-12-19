@@ -8,6 +8,8 @@ import { SwapIcon } from "../../Icons";
 import { Button } from "../../Button/Button";
 import DirectSwapFee from "./components/DirectSwapFee";
 import { SwapData } from "./DirectSwapWidget";
+import ConnectWalletButton from "../../Button/ConnectWalletButton";
+import { useWallet } from "../../../hooks/useWallet";
 
 interface Props {
   sellData: SwapData[];
@@ -20,6 +22,7 @@ interface Props {
 
 const DirectSwapStep1: FC<Props> = ({ sellData, receiveData, setSellData, setReceiveData, onNext, handleSwap }) => {
   const [isValid, setIsValid] = useState(false);
+  const { isConnected } = useWallet();
 
   const handleAddData = (setData: Dispatch<SetStateAction<SwapData[]>>) => () => {
     const newItem: SwapData = {
@@ -85,13 +88,16 @@ const DirectSwapStep1: FC<Props> = ({ sellData, receiveData, setSellData, setRec
               </Typography>
             </AddText>
           </SellWrapper>
-
           <ButtonWrapper>
-            <Button type="submit" onClick={handleSubmit} disabled={!isValid} onKeyDown={(e) => e.preventDefault()}>
-              <Typography color="gray.50" variant="paragraphMedium">
-                Submit
-              </Typography>
-            </Button>
+            {isConnected ? (
+              <Button type="submit" onClick={handleSubmit} disabled={!isValid} onKeyDown={(e) => e.preventDefault()}>
+                <Typography color="gray.50" variant="paragraphMedium">
+                  Submit
+                </Typography>
+              </Button>
+            ) : (
+              <ConnectWalletButton />
+            )}
           </ButtonWrapper>
 
           <DirectSwapFee isFormValid={true} />
